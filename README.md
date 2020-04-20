@@ -6,3 +6,6 @@ https://st.suckless.org/
 This is my personal build including following patches:
 
  * focusonclick
+ * center
+ * fakefullscreen
+ * noborders
