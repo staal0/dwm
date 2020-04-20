@@ -27,11 +27,12 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class          instance  title  tags mask  isfloating   monitor */
-	{ "st",           NULL,     NULL,  0,         0,           -1 },
-	{ "Firefox-esr",  NULL,     NULL,  1 << 1,    0,           -1 },
-	{ "thunderbird",  NULL,     NULL,  1 << 2,    0,           -1 },
-	{ "Signal",       NULL,     NULL,  1,         0,           -1 },
+	/* class          instance  title  			tags mask  iscentered  isfloating   monitor */
+	{ "st-256color",  NULL,     NULL,  			0,         0,		  0,           -1 },
+	{ NULL,			  NULL,     "pulsemixer",  	0,         1,		  1,           -1 },
+	{ "Firefox-esr",  NULL,     NULL,  			1 << 1,    0,		  0,           -1 },
+	{ "thunderbird",  NULL,     NULL,  			1 << 2,    0,		  0,           -1 },
+	{ "Signal",       NULL,     NULL,  			1,         0,		  0,           -1 },
 };
 
 /* layout(s) */
@@ -65,6 +66,7 @@ static const char *lockcmd[] = { "slock", NULL };
 static const char *soundupcmd[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
 static const char *sounddowncmd[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
 static const char *soundtogglecmd[] = { "amixer", "-q", "sset", "Master", "toggle", NULL };
+static const char *mixercmd[] = { "st", "pulsemixer", NULL };
 static const char *clipmenucmd[] = { "clipmenu", NULL };
 static const char *showclipboardcmd[]  = { "show_clipboard.sh", NULL };
 static const char *scrotcmd[]  = { "scrot", NULL };
@@ -79,6 +81,7 @@ static Key keys[] = {
 	{ ControlMask,                  XK_Up,     spawn,          {.v = soundupcmd } },
 	{ ControlMask,                  XK_Down,   spawn,          {.v = sounddowncmd } },
 	{ ControlMask,                  XK_space,  spawn,          {.v = soundtogglecmd } },
+	{ ControlMask,                  XK_m,  	   spawn,          {.v = mixercmd } },
 	{ MODKEY,                       XK_Insert, spawn,          {.v = clipmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Insert, spawn,          {.v = showclipboardcmd } },
 	{ 0,                            XK_Print,  spawn,          {.v = scrotcmd } },
