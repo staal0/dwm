@@ -29,7 +29,7 @@ static const Rule rules[] = {
 	 */
 	/* class          instance  title  			tags mask  iscentered  isfloating   monitor */
 	{ "st-256color",  NULL,     NULL,  			0,         0,		  0,           -1 },
-	{ NULL,			  NULL,     "pulsemixer",  	0,         1,		  1,           -1 },
+	{ NULL,		  NULL,     "pulsemixer",	  	0,         1,		  1,           -1 },
 	{ "Firefox-esr",  NULL,     NULL,  			1 << 1,    0,		  0,           -1 },
 	{ "thunderbird",  NULL,     NULL,  			1 << 2,    0,		  0,           -1 },
 	{ "Signal",       NULL,     NULL,  			1,         0,		  0,           -1 },
@@ -39,6 +39,8 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+
+#include "maximize.c"
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -74,50 +76,55 @@ static const char *scrotfocusedcmd[]  = { "scrot", "--focused", NULL };
 static const char *officefancmd[]  = { "office_fan.sh", NULL };
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ControlMask,           XK_l,      spawn,          {.v = lockcmd } },
-	{ ControlMask,                  XK_Up,     spawn,          {.v = soundupcmd } },
-	{ ControlMask,                  XK_Down,   spawn,          {.v = sounddowncmd } },
-	{ ControlMask,                  XK_space,  spawn,          {.v = soundtogglecmd } },
-	{ ControlMask,                  XK_m,  	   spawn,          {.v = mixercmd } },
-	{ MODKEY,                       XK_Insert, spawn,          {.v = clipmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Insert, spawn,          {.v = showclipboardcmd } },
-	{ 0,                            XK_Print,  spawn,          {.v = scrotcmd } },
-	{ MODKEY,                       XK_Print,  spawn,          {.v = scrotfocusedcmd } },
-	{ MODKEY|ShiftMask,             XK_F1,     spawn,          {.v = officefancmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	/* modifier                     key        function        		argument */
+	{ MODKEY,                       XK_p,      spawn,          		{.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          		{.v = termcmd } },
+	{ MODKEY|ControlMask,           XK_l,      spawn,          		{.v = lockcmd } },
+	{ ControlMask,                  XK_Up,     spawn,          		{.v = soundupcmd } },
+	{ ControlMask,                  XK_Down,   spawn,          		{.v = sounddowncmd } },
+	{ ControlMask,                  XK_space,  spawn,          		{.v = soundtogglecmd } },
+	{ ControlMask,                  XK_m,  	   spawn,          		{.v = mixercmd } },
+	{ MODKEY,                       XK_Insert, spawn,          		{.v = clipmenucmd } },
+	{ MODKEY|ShiftMask,             XK_Insert, spawn,          		{.v = showclipboardcmd } },
+	{ 0,                            XK_Print,  spawn,          		{.v = scrotcmd } },
+	{ MODKEY,                       XK_Print,  spawn,          		{.v = scrotfocusedcmd } },
+	{ MODKEY|ShiftMask,             XK_F1,     spawn,          		{.v = officefancmd } },
+	{ MODKEY|ControlMask|ShiftMask, XK_h,      togglehorizontalmax,	{0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_l,      togglehorizontalmax, {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_j,      toggleverticalmax,   {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_k,      toggleverticalmax,   {0} },
+	{ MODKEY|ControlMask,           XK_m,      togglemaximize,      {0} },
+	{ MODKEY,                       XK_b,      togglebar,      		{0} },
+	{ MODKEY,                       XK_j,      focusstack,     		{.i = +1 } },
+	{ MODKEY,                       XK_k,      focusstack,     		{.i = -1 } },
+	{ MODKEY,                       XK_i,      incnmaster,     		{.i = +1 } },
+	{ MODKEY,                       XK_d,      incnmaster,     		{.i = -1 } },
+	{ MODKEY,                       XK_h,      setmfact,       		{.f = -0.05} },
+	{ MODKEY,                       XK_l,      setmfact,       		{.f = +0.05} },
+	{ MODKEY,                       XK_Return, zoom,           		{0} },
+	{ MODKEY,                       XK_Tab,    view,           		{0} },
+	{ MODKEY|ShiftMask,             XK_c,      killclient,     		{0} },
+	{ MODKEY,                       XK_t,      setlayout,      		{.v = &layouts[0]} },
+	{ MODKEY,                       XK_f,      setlayout,      		{.v = &layouts[1]} },
+	{ MODKEY,                       XK_m,      setlayout,      		{.v = &layouts[2]} },
+	{ MODKEY,                       XK_space,  setlayout,      		{0} },
+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, 		{0} },
+	{ MODKEY,                       XK_0,      view,           		{.ui = ~0 } },
+	{ MODKEY|ShiftMask,             XK_0,      tag,            		{.ui = ~0 } },
+	{ MODKEY,                       XK_comma,  focusmon,       		{.i = -1 } },
+	{ MODKEY,                       XK_period, focusmon,       		{.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         		{.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period, tagmon,         		{.i = +1 } },
+	TAGKEYS(                        XK_1,                      		0)
+	TAGKEYS(                        XK_2,                      		1)
+	TAGKEYS(                        XK_3,                      		2)
+	TAGKEYS(                        XK_4,                      		3)
+	TAGKEYS(                        XK_5,                      		4)
+	TAGKEYS(                        XK_6,                      		5)
+	TAGKEYS(                        XK_7,                      		6)
+	TAGKEYS(                        XK_8,                      		7)
+	TAGKEYS(                        XK_9,                      		8)
+	{ MODKEY|ShiftMask,             XK_q,      quit,           		{0} },
 };
 
 /* button definitions */

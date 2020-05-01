@@ -9,3 +9,4 @@ This is my personal build including following patches:
  * center
  * fakefullscreen
  * noborders
+ * maximize
