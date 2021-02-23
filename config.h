@@ -30,9 +30,17 @@ static const Rule rules[] = {
 	/* class          instance  title  			tags mask  iscentered  isfloating   monitor */
 	{ "st-256color",  NULL,     NULL,  			0,         0,		  0,           -1 },
 	{ NULL,		  NULL,     "pulsemixer",	  	0,         1,		  1,           -1 },
-	{ "Firefox-esr",  NULL,     NULL,  			1 << 1,    0,		  0,           -1 },
+	{ "qutebrowser",  NULL,     NULL,  			1 << 1,    0,		  0,           -1 },
+	{ "Firefox-esr",  NULL,     NULL,  			1 << 3,    0,		  0,           -1 },
 	{ "thunderbird",  NULL,     NULL,  			1 << 2,    0,		  0,           -1 },
+	{ "Evolution",    NULL,     NULL,  			1 << 2,    0,		  0,           -1 },
+	{ NULL,		  NULL,     "neomutt", 			1 << 2,    0,		  0,           -1 },
+	{ NULL,		  NULL,     "newsboat",			1 << 2,    0,		  0,           -1 },
+	{ NULL,		  NULL,     "calcurse",			1 << 2,    0,		  0,           -1 },
 	{ "Signal",       NULL,     NULL,  			1,         0,		  0,           -1 },
+	{ "MPlayer",	  NULL,     "cam1",	  		0,         1,		  1,           -1 },
+	{ "MPlayer",	  NULL,     "cam2",	  		0,         1,		  1,           -1 },
+	{ "MPlayer",	  NULL,     "cam3",	  		0,         1,		  1,           -1 },
 };
 
 /* layout(s) */
@@ -63,7 +71,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "st", "-e", "fish", NULL };
 static const char *lockcmd[] = { "slock", NULL };
 static const char *soundupcmd[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
 static const char *sounddowncmd[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
@@ -74,6 +82,10 @@ static const char *showclipboardcmd[]  = { "show_clipboard.sh", NULL };
 static const char *scrotcmd[]  = { "scrot", NULL };
 static const char *scrotfocusedcmd[]  = { "scrot", "--focused", NULL };
 static const char *officefancmd[]  = { "office_fan.sh", NULL };
+static const char *cam1cmd[]  = { "cam.sh", "1", NULL };
+static const char *cam2cmd[]  = { "cam.sh", "2", NULL };
+static const char *cam4cmd[]  = { "cam.sh", "3", NULL };
+static const char *camallcmd[]  = { "cam.sh", "all", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        		argument */
@@ -89,6 +101,10 @@ static Key keys[] = {
 	{ 0,                            XK_Print,  spawn,          		{.v = scrotcmd } },
 	{ MODKEY,                       XK_Print,  spawn,          		{.v = scrotfocusedcmd } },
 	{ MODKEY|ShiftMask,             XK_F1,     spawn,          		{.v = officefancmd } },
+	{ MODKEY|ShiftMask,             XK_F2,     spawn,          		{.v = cam1cmd } },
+	{ MODKEY|ShiftMask,             XK_F3,     spawn,          		{.v = cam2cmd } },
+	{ MODKEY|ShiftMask,             XK_F4,     spawn,          		{.v = cam4cmd } },
+	{ MODKEY|ShiftMask,             XK_F5,     spawn,          		{.v = camallcmd } },
 	{ MODKEY|ControlMask|ShiftMask, XK_h,      togglehorizontalmax,	{0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_l,      togglehorizontalmax, {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_j,      toggleverticalmax,   {0} },
