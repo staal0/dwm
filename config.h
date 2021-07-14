@@ -56,18 +56,16 @@ static const Rule rules[] = {
 	 */
 	/* class          instance  title  			tags mask  iscentered  isfloating   monitor */
 	{ "st-256color",  NULL,     NULL,  			0,         0,		  0,           -1 },
+	{ "Alacritty",    NULL,     NULL,  			0,         0,		  0,           -1 },
 	{ NULL,		  NULL,     "pulsemixer",	  	0,         1,		  1,           -1 },
 	{ "qutebrowser",  NULL,     NULL,  			1 << 1,    0,		  0,           -1 },
-	{ "Firefox-esr",  NULL,     NULL,  			1 << 3,    0,		  0,           -1 },
-	{ "thunderbird",  NULL,     NULL,  			1 << 2,    0,		  0,           -1 },
-	{ "Evolution",    NULL,     NULL,  			1 << 2,    0,		  0,           -1 },
 	{ NULL,		  NULL,     "neomutt", 			1 << 2,    0,		  0,           -1 },
-	{ NULL,		  NULL,     "newsboat",			1 << 2,    0,		  0,           -1 },
-	{ NULL,		  NULL,     "calcurse",			1 << 2,    0,		  0,           -1 },
+	{ NULL,		  NULL,     "newsboat",			1,    	   0,		  0,           -1 },
+	/*{ NULL,		  NULL,     "calcurse",			1 << 2,    0,		  0,           -1 },*/
 	{ "Signal",       NULL,     NULL,  			1,         0,		  0,           -1 },
-	{ "MPlayer",	  NULL,     "cam1",	  		0,         1,		  1,           -1 },
-	{ "MPlayer",	  NULL,     "cam2",	  		0,         1,		  1,           -1 },
-	{ "MPlayer",	  NULL,     "cam3",	  		0,         1,		  1,           -1 },
+	{ "mpv",	  NULL,     "cam1",	  		0,         1,		  1,           -1 },
+	{ "mpv",	  NULL,     "cam2",	  		0,         1,		  1,           -1 },
+	{ "mpv",	  NULL,     "cam3",	  		0,         1,		  1,           -1 },
 };
 
 /* layout(s) */
@@ -98,7 +96,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", "-e", "fish", NULL };
+static const char *termcmd[]  = { "alacritty", "-e", "fish", NULL };
 static const char *lockcmd[] = { "slock", NULL };
 static const char *soundupcmd[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
 static const char *sounddowncmd[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
@@ -106,6 +104,7 @@ static const char *soundtogglecmd[] = { "amixer", "-q", "sset", "Master", "toggl
 static const char *mixercmd[] = { "st", "pulsemixer", NULL };
 static const char *clipmenucmd[] = { "clipmenu", NULL };
 static const char *showclipboardcmd[]  = { "show_clipboard.sh", NULL };
+static const char *sessioncmd[]  = { "dmenu_session.sh", NULL };
 static const char *scrotcmd[]  = { "scrot", NULL };
 static const char *scrotfocusedcmd[]  = { "scrot", "--focused", NULL };
 static const char *officefancmd[]  = { "office_fan.sh", NULL };
@@ -167,7 +166,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      		6)
 	TAGKEYS(                        XK_8,                      		7)
 	TAGKEYS(                        XK_9,                      		8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           		{0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           		{0} },
+	{ MODKEY|ShiftMask,             XK_q,      spawn,           		{.v = sessioncmd } },
 };
 
 /* button definitions */
