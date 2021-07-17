@@ -105,9 +105,11 @@ static const char *mixercmd[] = { "st", "pulsemixer", NULL };
 static const char *clipmenucmd[] = { "clipmenu", NULL };
 static const char *showclipboardcmd[]  = { "show_clipboard.sh", NULL };
 static const char *sessioncmd[]  = { "dmenu_session.sh", NULL };
-static const char *scrotcmd[]  = { "scrot", NULL };
+/* static const char *scrotcmd[]  = { "scrot", NULL }; */
 static const char *scrotfocusedcmd[]  = { "scrot", "--focused", NULL };
+static const char *scrotcmd[]  = { "dmenu_scrot.sh", NULL };
 static const char *officefancmd[]  = { "office_fan.sh", NULL };
+static const char *officeledcmd[]  = { "office_led.sh", NULL };
 static const char *cam1cmd[]  = { "cam.sh", "1", NULL };
 static const char *cam2cmd[]  = { "cam.sh", "2", NULL };
 static const char *cam4cmd[]  = { "cam.sh", "3", NULL };
@@ -127,10 +129,11 @@ static Key keys[] = {
 	{ 0,                            XK_Print,  spawn,          		{.v = scrotcmd } },
 	{ MODKEY,                       XK_Print,  spawn,          		{.v = scrotfocusedcmd } },
 	{ MODKEY|ShiftMask,             XK_F1,     spawn,          		{.v = officefancmd } },
-	{ MODKEY|ShiftMask,             XK_F2,     spawn,          		{.v = cam1cmd } },
-	{ MODKEY|ShiftMask,             XK_F3,     spawn,          		{.v = cam2cmd } },
-	{ MODKEY|ShiftMask,             XK_F4,     spawn,          		{.v = cam4cmd } },
-	{ MODKEY|ShiftMask,             XK_F5,     spawn,          		{.v = camallcmd } },
+	{ MODKEY|ShiftMask,             XK_F2,     spawn,          		{.v = officeledcmd } },
+	{ MODKEY|ShiftMask,             XK_F5,     spawn,          		{.v = cam2cmd } },
+	{ MODKEY|ShiftMask,             XK_F6,     spawn,          		{.v = cam1cmd } },
+	{ MODKEY|ShiftMask,             XK_F7,     spawn,          		{.v = cam4cmd } },
+	{ MODKEY|ShiftMask,             XK_F8,     spawn,          		{.v = camallcmd } },
 	{ MODKEY|ControlMask|ShiftMask, XK_h,      togglehorizontalmax,	{0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_l,      togglehorizontalmax, {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_j,      toggleverticalmax,   {0} },
