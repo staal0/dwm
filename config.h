@@ -110,6 +110,7 @@ static const char *scrotfocusedcmd[]  = { "scrot", "--focused", NULL };
 static const char *scrotcmd[]  = { "dmenu_scrot.sh", NULL };
 static const char *officefancmd[]  = { "office_fan.sh", NULL };
 static const char *officeledcmd[]  = { "office_led.sh", NULL };
+static const char *appointmentscmd[]  = { "dunst_appointments.sh", NULL };
 static const char *cam1cmd[]  = { "cam.sh", "1", NULL };
 static const char *cam2cmd[]  = { "cam.sh", "2", NULL };
 static const char *cam4cmd[]  = { "cam.sh", "3", NULL };
@@ -170,6 +171,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      		7)
 	TAGKEYS(                        XK_9,                      		8)
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           		{0} },
+	{ MODKEY|ShiftMask,             XK_a,      spawn,           		{.v = appointmentscmd } },
 	{ MODKEY|ShiftMask,             XK_q,      spawn,           		{.v = sessioncmd } },
 };
 
