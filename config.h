@@ -9,17 +9,6 @@ static const int focusonwheel       = 0;
 static const char *fonts[]          = { "monospace:size=13" };
 static const char dmenufont[]       = "monospace:size=13";
 
-//static const char col_gray1[]       = "#222222";
-//static const char col_gray2[]       = "#444444";
-//static const char col_gray3[]       = "#bbbbbb";
-//static const char col_gray4[]       = "#eeeeee";
-//static const char col_cyan[]        = "#005577";
-//static const char *colors[][3]      = {
-//	/*               fg         bg         border   */
-//	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-//	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-//};
-
 /*
 DRACULA COLOR SCHEME
 Background	#282a36	
@@ -54,26 +43,20 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class          instance  title  			tags mask  iscentered  isfloating   monitor */
-	{ "st-256color",  NULL,     NULL,  			0,         0,		  0,           -1 },
-	{ "Alacritty",    NULL,     NULL,  			0,         0,		  0,           -1 },
-	{ NULL,		  NULL,     "pulsemixer",	  	0,         1,		  1,           -1 },
-	{ "qutebrowser",  NULL,     NULL,  			1 << 1,    0,		  0,           -1 },
-	{ NULL,		  NULL,     "neomutt", 			1 << 2,    0,		  0,           -1 },
-	{ NULL,		  NULL,     "newsboat",			1,    	   0,		  0,           -1 },
-	/*{ NULL,		  NULL,     "calcurse",			1 << 2,    0,		  0,           -1 },*/
-	{ "Signal",       NULL,     NULL,  			1,         0,		  0,           -1 },
-	{ "mpv",	  NULL,     "cam1",	  		0,         1,		  1,           -1 },
-	{ "mpv",	  NULL,     "cam2",	  		0,         1,		  1,           -1 },
-	{ "mpv",	  NULL,     "cam3",	  		0,         1,		  1,           -1 },
+	/* class          instance    title       tags mask     isfloating   monitor */
+	{ "Alacritty",    NULL,       NULL,       0,            0,           -1 },
+	{ "qutebrowser",  NULL,       NULL,       1 << 1,       0,           -1 },
+	{ NULL,           NULL,       "neomutt",  1 << 2,       0,           -1 },
+	{ NULL,           NULL,       "newsboat", 1,            0,           -1 },
+	{ "Signal",       NULL,       NULL,       1,            0,           -1 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
-
-#include "maximize.c"
+static const float mfact        = 0.55; /* factor of master area size [0.05..0.95] */
+static const int nmaster        = 1;    /* number of clients in master area */
+static const int resizehints    = 1;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
+static const int attachbelow    = 1;    /* 1 means attach after the currently active window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -101,21 +84,16 @@ static const char *lockcmd[] = { "slock", NULL };
 static const char *soundupcmd[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
 static const char *sounddowncmd[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
 static const char *soundtogglecmd[] = { "amixer", "-q", "sset", "Master", "toggle", NULL };
-static const char *mixercmd[] = { "st", "pulsemixer", NULL };
 static const char *clipmenucmd[] = { "clipmenu", NULL };
 static const char *showclipboardcmd[]  = { "show_clipboard.sh", NULL };
 static const char *sessioncmd[]  = { "dmenu_session.sh", NULL };
-/* static const char *scrotcmd[]  = { "scrot", NULL }; */
 static const char *scrotfocusedcmd[]  = { "scrot", "--focused", NULL };
 static const char *scrotcmd[]  = { "dmenu_scrot.sh", NULL };
 static const char *officefancmd[]  = { "office_fan.sh", NULL };
 static const char *officeledcmd[]  = { "office_led.sh", NULL };
 static const char *appointmentscmd[]  = { "dunst_appointments.sh", NULL };
-static const char *cam1cmd[]  = { "cam.sh", "1", NULL };
-static const char *cam2cmd[]  = { "cam.sh", "2", NULL };
-static const char *cam4cmd[]  = { "cam.sh", "3", NULL };
-static const char *camallcmd[]  = { "cam.sh", "all", NULL };
 
+#include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        		argument */
 	{ MODKEY,                       XK_p,      spawn,          		{.v = dmenucmd } },
@@ -124,22 +102,12 @@ static Key keys[] = {
 	{ ControlMask,                  XK_Up,     spawn,          		{.v = soundupcmd } },
 	{ ControlMask,                  XK_Down,   spawn,          		{.v = sounddowncmd } },
 	{ ControlMask,                  XK_space,  spawn,          		{.v = soundtogglecmd } },
-	{ ControlMask,                  XK_m,  	   spawn,          		{.v = mixercmd } },
 	{ MODKEY,                       XK_Insert, spawn,          		{.v = clipmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Insert, spawn,          		{.v = showclipboardcmd } },
 	{ 0,                            XK_Print,  spawn,          		{.v = scrotcmd } },
 	{ MODKEY,                       XK_Print,  spawn,          		{.v = scrotfocusedcmd } },
 	{ MODKEY|ShiftMask,             XK_F1,     spawn,          		{.v = officefancmd } },
 	{ MODKEY|ShiftMask,             XK_F2,     spawn,          		{.v = officeledcmd } },
-	{ MODKEY|ShiftMask,             XK_F5,     spawn,          		{.v = cam2cmd } },
-	{ MODKEY|ShiftMask,             XK_F6,     spawn,          		{.v = cam1cmd } },
-	{ MODKEY|ShiftMask,             XK_F7,     spawn,          		{.v = cam4cmd } },
-	{ MODKEY|ShiftMask,             XK_F8,     spawn,          		{.v = camallcmd } },
-	{ MODKEY|ControlMask|ShiftMask, XK_h,      togglehorizontalmax,	{0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_l,      togglehorizontalmax, {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_j,      toggleverticalmax,   {0} },
-	{ MODKEY|ControlMask|ShiftMask, XK_k,      toggleverticalmax,   {0} },
-	{ MODKEY|ControlMask,           XK_m,      togglemaximize,      {0} },
 	{ MODKEY,                       XK_b,      togglebar,      		{0} },
 	{ MODKEY,                       XK_j,      focusstack,     		{.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     		{.i = -1 } },
@@ -147,6 +115,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     		{.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       		{.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       		{.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      		{.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      		{.i = -1 } },
 	{ MODKEY,                       XK_Return, zoom,           		{0} },
 	{ MODKEY,                       XK_Tab,    view,           		{0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     		{0} },
