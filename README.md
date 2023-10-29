@@ -1,7 +1,7 @@
 # dwm
 Dynamic window manager for X.
 
-Build: dwm 6.3
+Build: dwm 6.4
 
 https://dwm.suckless.org/
 
