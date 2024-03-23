@@ -10,6 +10,6 @@ This is my personal build including following patches:
  * focusonclick
  * attachbelow
  * fakefullscreen
- * noborders
+ * noborder
  * movestack
  * pertag

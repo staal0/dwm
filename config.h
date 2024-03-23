@@ -11,28 +11,30 @@ static const char dmenufont[]       = "monospace:size=13";
 
 /*
 DRACULA COLOR SCHEME
-Background	#282a36	
-Current Line	#44475a	
-Foreground	#f8f8f2	
-Comment		#6272a4	
-Cyan		#8be9fd	
-Green		#50fa7b	
-Orange		#ffb86c	
-Pink		#ff79c6	
-Purple		#bd93f9	
-Red		#ff5555	
-Yellow		#f1fa8c
+Background		#282a36
+Current Line	#44475a
+Foreground		#f8f8f2
+Comment			#6272a4
+Cyan			#8be9fd
+Green			#50fa7b
+Orange			#ffb86c
+Pink			#ff79c6
+Purple			#bd93f9
+Red				#ff5555
+Yellow			#f1fa8c
 */
 
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#f8f8f2";
+static const char col_purple[]      = "#bd93f9";
+static const char col_comment[]     = "#6272a4";
 static const char col_cyan[]        = "#44475a";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_gray1,  col_cyan  },
+	[SchemeSel]  = { col_gray4, col_gray1, col_comment },
 };
 
 /* tagging */
@@ -81,8 +83,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", "-e", "fish", NULL };
 static const char *lockcmd[] = { "slock", NULL };
-static const char *soundupcmd[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
-static const char *sounddowncmd[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
+static const char *soundupcmd[] = { "amixer", "-q", "sset", "Master", "3%+", NULL };
+static const char *sounddowncmd[] = { "amixer", "-q", "sset", "Master", "3%-", NULL };
 static const char *soundtogglecmd[] = { "amixer", "-q", "sset", "Master", "toggle", NULL };
 static const char *clipmenucmd[] = { "clipmenu", NULL };
 static const char *showclipboardcmd[]  = { "show_clipboard.sh", NULL };
